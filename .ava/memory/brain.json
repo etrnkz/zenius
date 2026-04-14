@@ -1,0 +1,21 @@
+{
+  "projectRoot": "/home/sud/Desktop/study-helper-ai-main/.ava",
+  "generatedAt": "2026-04-14T10:17:55.106Z",
+  "nodeCount": 36,
+  "brief": "[Project: .ava]\nStack: Next.js\nDecisions: Quiz questions should be implemented as multiple-choice (MCQ) format instead of short-answer or ope…\nRecent: [Session context] [user]: ccan u change the quiz q/a or the short answer to choice or MCQs question… | [Session summary 2026-04-12 18:27]\nCURRENT_TASK: Convert the existing quiz or short-answer question… | [Session context] [user]: the quizes next button bg s blue change that and i told u to train the qu…\nOpen issues: Discovery: And returns proper MCQ format. The issue is the… | Discovery: And returns proper MCQ format. The issue is the… | Discovery: And returns proper MCQ format. The issue is the…\nNodes: 36 active, confidence avg 0.55",
+  "stack": [
+    "Next.js"
+  ],
+  "keyDecisions": [
+    "Quiz questions should be implemented as multiple-choice (MCQ) format instead of short-answer or ope…"
+  ],
+  "activeWork": [
+    "[Session context] [user]: ccan u change the quiz q/a or the short answer to choice or MCQs question…",
+    "[Session summary 2026-04-12 18:27]\nCURRENT_TASK: Convert the existing quiz or short-answer question…",
+    "[Session context] [user]: the quizes next button bg s blue change that and i told u to train the qu…"
+  ],
+  "knownPatterns": [],
+  "confidenceAvg": 0.55,
+  "lastSessionDate": "2026-04-12",
+  "graphHash": "36-18-2026-04-14T10:17:55.039Z"
+}

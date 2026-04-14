@@ -1,0 +1,73 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build web app
+      run: npm run build
+      env:
+        NODE_ENV: production
+        
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Sync Capacitor
+      run: |
+        npm install @capacitor/cli
+        npx cap sync android
+      env:
+        NODE_ENV: production
+        
+    - name: Build Debug APK
+      run: |
+        cd android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+        
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: study-helper-debug-apk
+        path: android/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30
+        
+    - name: APK Info
+      run: |
+        echo "✅ Build Complete!"
+        echo "📦 APK Size: $(du -h android/app/build/outputs/apk/debug/app-debug.apk | cut -f1)"
+        echo "📱 Package: com.studyhelper.ai"
+        echo "🔧 Type: Debug APK"
+        echo ""
+        echo "To install on your device:"
+        echo "1. Download the APK from Artifacts"
+        echo "2. Enable 'Install from Unknown Sources' on your phone"
+        echo "3. Transfer APK to your phone"
+        echo "4. Open and install"

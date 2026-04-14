@@ -1,0 +1,3 @@
+{
+  "/api/generate-flashcards/route": "app/api/generate-flashcards/route.js"
+}
