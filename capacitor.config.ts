@@ -1,11 +1,13 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
-const serverUrl = process.env.CAP_SERVER_URL?.trim();
-
 const config: CapacitorConfig = {
   appId: 'com.zenius.app',
   appName: 'Zenius',
   webDir: 'out',
+  server: {
+    url: 'https://zenius-s.vercel.app',
+    cleartext: false,
+  },
   plugins: {
     CapacitorHttp: {
       enabled: true,
@@ -21,7 +23,7 @@ const config: CapacitorConfig = {
   },
   android: {
     backgroundColor: '#000000',
-    allowMixedContent: true,
+    allowMixedContent: false,
     captureInput: true,
     webContentsDebuggingEnabled: true,
   },

@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
 /* Hero section animations */
 @keyframes zoomOut {
   0% {
