@@ -508,4 +508,3 @@ Potential features to add:
 <p align="center">
   <em>Zenius - Your intelligent AI tutor for smarter learning</em>
 </p>
-DEEPSEEK_API_KEY,XAI_API_KEY, HF_API_KEY, TOGETHER_API_KEY, FIREWORKS_API_KEY,OPENROUTER_API_KEY, SERPER_API_KEY, MISTRAL_API_KEY, CEREBRAS_API_KEY, GEMINI_API_KEY
