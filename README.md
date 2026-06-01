@@ -35,7 +35,7 @@ Drop in PDFs, DOCX, or PPTX files. Zenius strips out the noise — page numbers,
 - **Text-to-Speech** — Listen to your notes or podcast scripts via Piper (local) or Azure Speech Services
 
 ### AI Generation
-Powered by a multi-provider fallback chain: Cerebras → Mistral → xAI → Gemini → HuggingFace. Only the providers you configure get called.
+Powered by a multi-provider fallback chain: Cerebras → Mistral → xAI → Gemini → HuggingFace → ChatGPT → Gemini. Works out of the box with [chatgpt-unofficial-api](https://github.com/etrnkz/chatgpt-unofficial-api) and [gemini-unofficial-api](https://github.com/etrnkz/gemini-unofficial-api) — no API keys required.
 
 | Feature | What it does |
 |---------|-------------|
@@ -67,8 +67,8 @@ npm run dev                    # opens at http://localhost:3000
 
 ### Prerequisites
 - **Node.js** ≥ 18
-- No API keys? No problem — works out of the box with the unofficial Gemini provider.
-  Want higher limits? Set `GEMINI_UNOFFICIAL_COOKIE` or any provider API key in `.env.local` (see [docs/configuration.md](docs/configuration.md)).
+- No API keys? No problem — works out of the box with [chatgpt-unofficial-api](https://github.com/etrnkz/chatgpt-unofficial-api) and [gemini-unofficial-api](https://github.com/etrnkz/gemini-unofficial-api).
+  Want higher limits? Set `CHATGPT_UNOFFICIAL_COOKIE`, `GEMINI_UNOFFICIAL_COOKIE`, or any provider API key in `.env.local` (see [docs/configuration.md](docs/configuration.md)).
 
 </details>
 
