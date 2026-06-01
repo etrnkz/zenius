@@ -2,10 +2,10 @@
 
 ## AI Providers
 
-At least one API key or the unofficial Gemini provider is required. Fallback order:
+At least one API key or an unofficial provider is required. Fallback order:
 
 ```
-Cerebras → Mistral → xAI → Gemini → HuggingFace → ... → GeminiUnofficial
+Cerebras → Mistral → xAI → Gemini → HuggingFace → ... → ChatGPTUnofficial → GeminiUnofficial
 ```
 
 | Variable | Provider | Notes |
@@ -17,9 +17,18 @@ Cerebras → Mistral → xAI → Gemini → HuggingFace → ... → GeminiUnoffi
 | `HF_API_KEY` | [HuggingFace](https://huggingface.co/settings/tokens) | Also used for TTS model access |
 | `GROQ_API_KEY` | [Groq](https://console.groq.com/) | Whisper transcription **only** — not used for chat/generation |
 
+### Unofficial ChatGPT (no API key needed)
+
+Powered by [chatgpt-unofficial-api](https://github.com/etrnkz/chatgpt-unofficial-api).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `CHATGPT_UNOFFICIAL_COOKIE` | — | ChatGPT cookies string for authenticated access (higher limits). Optional. |
+| `CHATGPT_UNOFFICIAL_MODEL` | `auto` | Model override |
+
 ### Unofficial Gemini (no API key needed)
 
-Works without any API key — great for getting started. Powered by [gemini-unofficial-api](https://github.com/etrnkz/gemini-unofficial-api).
+Powered by [gemini-unofficial-api](https://github.com/etrnkz/gemini-unofficial-api).
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -30,11 +39,12 @@ Works without any API key — great for getting started. Powered by [gemini-unof
 
 | Config | Behavior |
 |--------|----------|
-| No API keys, no cookie | Falls back to Gemini unofficial in guest mode (basic text chat) |
-| `GEMINI_UNOFFICIAL_COOKIE` set | Uses unofficial Gemini with cookies (higher limits, more features) |
-| Any standard API key set | Normal provider chain — unofficial is skipped |
+| No API keys, no cookie | Falls back to ChatGPT unofficial in guest mode, then Gemini |
+| `CHATGPT_UNOFFICIAL_COOKIE` set | Uses ChatGPT with cookies (higher limits) |
+| `GEMINI_UNOFFICIAL_COOKIE` set | Uses Gemini with cookies |
+| Any standard API key set | Normal provider chain — unofficial providers are skipped |
 
-To get cookies: log in to [gemini.google.com](https://gemini.google.com), open DevTools > Application > Cookies, and copy the cookie string. Save it as `GEMINI_UNOFFICIAL_COOKIE` in your `.env.local`.
+To get cookies: log in to the service, open DevTools > Application > Cookies, and copy the cookie string. Save it as the corresponding `*_UNOFFICIAL_COOKIE` variable in your `.env.local`.
 
 ## Piper TTS
 

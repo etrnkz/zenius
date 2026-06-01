@@ -524,8 +524,17 @@ export async function askTutor(prompt: string, options?: AskTutorOptions): Promi
     providers.push({ name: 'OpenRouter', call: () => callOpenRouter(prompt, systemPrompt, temperature) });
   }
 
-  // Unofficial Gemini — uses cookies (optional) instead of an API key
-  // Added when explicitly opted in via GEMINI_UNOFFICIAL_COOKIE, or as last resort if no other providers
+  // Unofficial providers — use cookies (optional) instead of API keys
+  if (process.env.CHATGPT_UNOFFICIAL_COOKIE?.trim()) {
+    providers.push({
+      name: 'ChatGPTUnofficial',
+      call: async () => {
+        const { callChatGPTUnofficial } = await import('./ai-unofficial');
+        return callChatGPTUnofficial(prompt, systemPrompt, temperature);
+      },
+    });
+  }
+
   if (process.env.GEMINI_UNOFFICIAL_COOKIE?.trim()) {
     providers.push({
       name: 'GeminiUnofficial',
@@ -539,10 +548,10 @@ export async function askTutor(prompt: string, options?: AskTutorOptions): Promi
   if (providers.length === 0) {
     // Last resort: guest mode (no cookies, no API key)
     providers.push({
-      name: 'GeminiUnofficial',
+      name: 'ChatGPTUnofficial',
       call: async () => {
-        const { callGeminiUnofficial } = await import('./ai-unofficial');
-        return callGeminiUnofficial(prompt, systemPrompt, temperature);
+        const { callChatGPTUnofficial } = await import('./ai-unofficial');
+        return callChatGPTUnofficial(prompt, systemPrompt, temperature);
       },
     });
   }
