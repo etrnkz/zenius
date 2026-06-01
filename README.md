@@ -62,13 +62,13 @@ Context-aware. Drop it in a note and it knows exactly what you're studying. Answ
 
 ```bash
 npm install
-cp .env.example .env.local    # drop in your API keys
 npm run dev                    # opens at http://localhost:3000
 ```
 
 ### Prerequisites
 - **Node.js** ≥ 18
-- At least **one AI provider API key** (see [docs/configuration.md](docs/configuration.md))
+- No API keys? No problem — works out of the box with the unofficial Gemini provider.
+  Want higher limits? Set `GEMINI_UNOFFICIAL_COOKIE` or any provider API key in `.env.local` (see [docs/configuration.md](docs/configuration.md)).
 
 </details>
 

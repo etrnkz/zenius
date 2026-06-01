@@ -2,6 +2,7 @@
 import { defaultChatModels } from '@/lib/ai-models';
 import { buildZeniusSystemPrompt } from '@/lib/zenius-prompts';
 
+
 const DEFAULT_SYSTEM_PROMPT = buildZeniusSystemPrompt({
   role: 'Expert academic tutor for all Zenius study workflows.',
   goals: [
@@ -523,11 +524,27 @@ export async function askTutor(prompt: string, options?: AskTutorOptions): Promi
     providers.push({ name: 'OpenRouter', call: () => callOpenRouter(prompt, systemPrompt, temperature) });
   }
 
+  // Unofficial Gemini — uses cookies (optional) instead of an API key
+  // Added when explicitly opted in via GEMINI_UNOFFICIAL_COOKIE, or as last resort if no other providers
+  if (process.env.GEMINI_UNOFFICIAL_COOKIE?.trim()) {
+    providers.push({
+      name: 'GeminiUnofficial',
+      call: async () => {
+        const { callGeminiUnofficial } = await import('./ai-unofficial');
+        return callGeminiUnofficial(prompt, systemPrompt, temperature);
+      },
+    });
+  }
+
   if (providers.length === 0) {
-    throw new Error(
-      'No AI API keys configured. Set at least one of: CEREBRAS_API_KEY, MISTRAL_API_KEY, XAI_API_KEY (or GROK_API_KEY), GEMINI_API_KEY, HF_API_KEY (or HUGGINGFACE_API_KEY), FIREWORKS_API_KEY, TOGETHER_API_KEY, DEEPSEEK_API_KEY.'
-      + ' Optional: OPENROUTER_API_KEY.'
-    );
+    // Last resort: guest mode (no cookies, no API key)
+    providers.push({
+      name: 'GeminiUnofficial',
+      call: async () => {
+        const { callGeminiUnofficial } = await import('./ai-unofficial');
+        return callGeminiUnofficial(prompt, systemPrompt, temperature);
+      },
+    });
   }
 
   const errors: string[] = [];
