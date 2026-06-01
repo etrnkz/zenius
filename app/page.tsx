@@ -83,7 +83,7 @@ export default function LandingPage() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="relative w-7 h-5 overflow-hidden">
               <Image
-                src="/logo.svg"
+                src="/images/logo.svg"
                 alt="Zenius"
                 fill
                 className="object-contain brightness-0 invert"
@@ -304,7 +304,7 @@ export default function LandingPage() {
                 {/* logo.svg directly — no white box wrapper */}
                 <div className="inline-flex items-center justify-center mb-8">
                   <Image
-                    src="/logo.svg"
+                    src="/images/logo.svg"
                     alt="Zenius"
                     width={56}
                     height={40}
@@ -351,7 +351,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="relative w-5 h-4 overflow-hidden">
-              <Image src="/logo.svg" alt="Zenius" fill className="object-contain brightness-0 invert opacity-30" />
+              <Image src="/images/logo.svg" alt="Zenius" fill className="object-contain brightness-0 invert opacity-30" />
             </div>
             <span className="text-xs text-zinc-700">Zenius · Built by Semeriya Seid</span>
           </div>

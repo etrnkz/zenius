@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'Zenius',
   description: 'AI-powered learning — notes, flashcards, quizzes, and more',
   icons: {
-    icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/images/logo.svg', type: 'image/svg+xml' }],
   },
 }
 

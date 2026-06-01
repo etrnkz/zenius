@@ -8,7 +8,7 @@ export type ZeniusTab = 'home' | 'search' | 'files' | 'chat' | 'library';
 export function ZeniusMark({ className = 'h-9 w-9' }: { className?: string }) {
   return (
     <img
-      src="/logo.svg"
+      src="/images/logo.svg"
       alt="Zenius"
       className={className}
     />

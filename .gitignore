@@ -37,10 +37,27 @@ piper/
 # Mobile build artifacts
 *.apk
 *.aab
+public/zenius.apk
+public/mobile.png
 android/.gradle/
 android/app/build/
 android/build/
 
+# Test files
+android/app/src/test/
+android/app/src/androidTest/
+
 # Static export output
 
 # Capacitor native platforms (generated)
+android/
+
+# AI agent config dirs
+.qwen/
+.claude/
+.ava/
+.codex
+
+# Garbage files
+next
+]
