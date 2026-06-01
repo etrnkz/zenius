@@ -5,131 +5,136 @@
 </p>
 
 <p align="center">
-  <strong>AI-powered learning platform.</strong><br />
-  Upload any study material — PDFs, DOCX, PPTX, audio, YouTube links, or web articles. Zenius automatically extracts the content and transforms it into smart notes, flashcards, quizzes, study podcasts, and an interactive AI tutor. All in one place, no account required.
+  <strong>Your AI study buddy.</strong><br />
+  Throw any study material at it — PDFs, DOCX, PPTX, audio recordings, YouTube videos, or web articles. Zenius rips out the important bits and turns them into notes, flashcards, quizzes, podcast-style summaries, and a tutor that actually knows what you're studying. No sign-up needed.
 </p>
 
 ---
 
-## Table of Contents
+## Contents
 
 | # | Section | |
 |---|---------|--|
 | 1 | [Features](#features) | AI generation, document processing, audio/video, tutor chat, UI |
-| 2 | [Quick Start](#quick-start) | Installation, prerequisites, dev server |
-| 3 | [Usage](#usage) | Web app walkthrough, navigation tabs |
-| 4 | [Development](#development) | Commands, docs links |
-| 5 | [Credits](#credits) | Author, license |
+| 2 | [Quick Start](#quick-start) | Install, configure, run |
+| 3 | [Usage](#usage) | How everything works |
+| 4 | [Development](#development) | Commands, docs |
+| 5 | [Credits](#credits) | Who built this |
 
 ---
 
 <details>
-<summary><strong>Features</strong></summary>
+<summary><strong>▸ Features</strong></summary>
 
 ### Document Processing
-Upload PDF, DOCX, or PPTX files. Content is extracted with automatic garbage filtering — slide numbers, page numbers, TOC entries, nav text, and filler are stripped before AI processing.
+Drop in PDFs, DOCX, or PPTX files. Zenius strips out the noise — page numbers, slide numbers, table of contents, nav text, filler — and keeps only what matters.
 
 ### Audio & Video
-- **Transcription** — Upload audio files; transcribed via Whisper (Groq API)
-- **YouTube** — Paste a YouTube link; extracts transcript and metadata
-- **Text-to-Speech** — Converts notes and scripts to natural speech via Piper (local) or Azure Speech Services
+- **Transcription** — Upload audio; Whisper (Groq API) turns it into text
+- **YouTube** — Paste a link; Zenius grabs the transcript and metadata
+- **Text-to-Speech** — Listen to your notes or podcast scripts via Piper (local) or Azure Speech Services
 
 ### AI Generation
-All generation uses a multi-tier AI fallback: Cerebras → Mistral → xAI → Gemini → HuggingFace. Only providers with configured API keys are called.
+Powered by a multi-provider fallback chain: Cerebras → Mistral → xAI → Gemini → HuggingFace. Only the providers you configure get called.
 
 | Feature | What it does |
 |---------|-------------|
-| **Smart Notes** | Raw material → organized, exam-focused study notes |
-| **Flashcards** | Auto-generated Q&A cards for spaced repetition |
-| **Quizzes** | Multiple-choice questions with 4 options, one correct answer |
+| **Smart Notes** | Raw content → clean, exam-ready study notes |
+| **Flashcards** | Auto-generated Q&A for spaced repetition |
+| **Quizzes** | Multiple-choice questions (4 options, one right answer) |
 | **Podcasts** | Conversational audio scripts from any source |
 
 ### AI Tutor Chat
-Context-aware Q&A that references your uploaded material. Responds like a helpful senior student — direct answers first, then clarification. Retains conversation history during a session.
+Context-aware. Drop it in a note and it knows exactly what you're studying. Answers like a helpful senior — straight to the point, with clarifications when you need them. Conversation history sticks around for the session.
 
 ### UI
-- Dark-themed, responsive, tab-based navigation
-- 5 tabs: Home, Search, Files, Chat, Library
-- Learning hub with per-note panels: Notes, Flashcards, Quizzes, Podcast
-- LocalStorage persistence for notes and user profile
+- Dark theme, responsive, tab-based navigation
+- Five tabs: Home, Search, Files, Chat, Library
+- Per-note learning hub with separate panels for Notes, Flashcards, Quizzes, Podcast
+- Everything persists in localStorage — your data stays on your machine
 
 </details>
 
 ---
 
 <details>
-<summary><strong>Quick Start</strong></summary>
+<summary><strong>▸ Quick Start</strong></summary>
 
 ```bash
 npm install
-cp .env.example .env.local    # add your API keys
-npm run dev                    # → http://localhost:3000
+cp .env.example .env.local    # drop in your API keys
+npm run dev                    # opens at http://localhost:3000
 ```
 
 ### Prerequisites
-- Node.js ≥ 18
-- At least one AI provider API key (see [docs/configuration.md](docs/configuration.md))
+- **Node.js** ≥ 18
+- At least **one AI provider API key** (see [docs/configuration.md](docs/configuration.md))
 
 </details>
 
 ---
 
 <details>
-<summary><strong>Usage</strong></summary>
+<summary><strong>▸ Usage</strong></summary>
 
 ### Web App
 
-1. **Open the app** — Navigate to `/app` (or click "Open App" on the landing page)
-2. **Create a note** — Tap the + button → choose **Blank document**, **Upload file**, or **Paste link**
-   - Supported uploads: PDF, DOCX, PPTX, audio files
-   - Links: YouTube videos or web pages (content is extracted via yt-dlp)
+1. **Open the app** — Head to `/app` or click "Open App" on the landing page
+2. **Create a note** — Tap **+** and choose **Blank document**, **Upload file**, or **Paste link**
+   - Uploads: PDF, DOCX, PPTX, audio files
+   - Links: YouTube videos or web pages (content extracted via yt-dlp)
 3. **Enter the learning hub** — Tap any note card to open it
-4. **Study** — Use the tabs inside the hub:
-   - **Notes** — View AI-generated notes; re-generate or download
-   - **Flashcards** — Browse auto-generated cards; flip to check answers
-   - **Quizzes** — Take a multiple-choice quiz; see your score
+4. **Study your way** — Use the tabs inside the hub:
+   - **Notes** — View or re-generate AI notes; download them
+   - **Flashcards** — Browse cards, flip to check answers
+   - **Quizzes** — Take a quiz, see your score
    - **Podcast** — Read or listen to the generated podcast script
-5. **Chat** — Ask the AI tutor questions. It has full context of your current note
+5. **Chat** — Ask the AI tutor anything. It has full context of your current note
 
 ### Navigation
 
-| Tab | Description |
+| Tab | What's there |
 |-----|-------------|
-| **Home** | Recent notes grid, quick-action buttons (Upload, Link, Audio) |
-| **Search** | Full-text search across all notes |
-| **Files** | File browser — tap any file to open in the Universal Doc Viewer |
+| **Home** | Recent notes grid, quick actions (Upload, Link, Audio) |
+| **Search** | Full-text search across all your notes |
+| **Files** | File browser — tap to open in the Universal Doc Viewer |
 | **Chat** | Global AI tutor (no note context — general Q&A) |
-| **Library** | All notes organized by subject/type |
+| **Library** | Every note, organized by subject and type |
 
 </details>
 
 ---
 
 <details>
-<summary><strong>Development</strong></summary>
+<summary><strong>▸ Development</strong></summary>
 
-| Command | Description |
+| Command | What it does |
 |---------|-------------|
 | `npm run dev` | Start dev server (Turbopack) |
 | `npm run build` | Production build |
-| `npm start` | Start production server |
-| `npm run lint` | Run ESLint |
+| `npm start` | Run production server |
+| `npm run lint` | Check code with ESLint |
 
-See [docs/configuration.md](docs/configuration.md) for environment setup, [docs/architecture.md](docs/architecture.md) for mobile builds and project structure, and [docs/api.md](docs/api.md) for the full API reference.
+Want the full picture? Check out:
+- [Configuration & environment](docs/configuration.md)
+- [Architecture & project structure](docs/architecture.md)
+- [API reference](docs/api.md)
 
 </details>
 
 ---
 
 <details>
-<summary><strong>Credits</strong></summary>
+<summary><strong>▸ Credits</strong></summary>
 
-Built by **Semeriya Seid** (Suda). Licensed for educational and personal use. See `package.json` for the full dependency list.
+Original author is **Semeriya Seid** (Hadi).  
+Forked from [study-helper-ai](https://github.com/semeriyaseid/study-helper-ai) by **Semeriya Seid(Sud)**.  
+Original work — all credit goes there.
 
 </details>
 
 ---
 
 <p align="center">
-  <em>Zenius — Your intelligent AI tutor for smarter learning</em>
+  <em>Zenius — learn smarter, not harder</em>
 </p>
