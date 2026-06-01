@@ -1,8 +1,46 @@
-
-
-# Common ignores
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Next.js build output
 .next/
+out/
+
+# Build artifacts
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment files
 .env
 .env*.local
+.env*.production
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test / temporary
+*.wav
+*.mp3
+test_*
+mobile.png
+
+# Piper TTS (platform-specific — download separately)
+piper/
+
+# Mobile build artifacts
+*.apk
+*.aab
+android/.gradle/
+android/app/build/
+android/build/
+
+# Static export output
+
+# Capacitor native platforms (generated)

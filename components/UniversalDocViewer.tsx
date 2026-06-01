@@ -273,7 +273,7 @@ function ExcelViewer({ fileUrl, fileName, onClose }: { fileUrl: string; fileName
           <tbody>
             {currentSheet.data.slice(0, 100).map((row, rowIndex) => (
               <tr key={rowIndex} className={rowIndex === 0 ? 'bg-gray-100 font-semibold' : ''}>
-                {row.map((cell, cellIndex) => (
+                {row.map((cell: any, cellIndex: number) => (
                   <td 
                     key={cellIndex} 
                     className="border border-gray-200 px-2 py-1 text-gray-800 min-w-[80px] max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"

@@ -151,7 +151,7 @@ export default function LandingPage() {
 
         {/* GLSL hills — full-screen background */}
         <div className="absolute inset-0 z-0">
-          <GLSLHills width="100%" height="100%" cameraZ={125} planeSize={256} speed={0.5} />
+          <GLSLHills width="100%" height="100%" speed={0.5} />
         </div>
 
         {/* dark overlay so text stays readable */}

@@ -108,6 +108,7 @@ export default function PPTXViewer({ fileUrl, fileName, onClose }: PPTXViewerPro
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     const w = canvas.width;
     const h = canvas.height;
     

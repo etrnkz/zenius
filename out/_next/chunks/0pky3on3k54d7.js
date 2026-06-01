@@ -1,1 +1,0 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,31425,t=>{"use strict";let e=(0,t.i(3985).default)("chevron-left",[["path",{d:"m15 18-6-6 6-6",key:"1wnfg3"}]]);t.s(["ChevronLeft",0,e],31425)},2688,t=>{t.v(e=>Promise.all(["static/chunks/182g9qdaklx~u.js"].map(e=>t.l(e))).then(()=>e(25415)))}]);

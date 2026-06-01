@@ -1,510 +1,349 @@
-# Zenius - AI Learning Platform
+# Zenius
 
 <p align="center">
-  <img src="study.svg" alt="Zenius Logo" width="200" />
+  <img src="study.svg" alt="Zenius" width="160" />
 </p>
 
 <p align="center">
-  <strong>Your intelligent AI tutor for smarter learning</strong>
+  <strong>AI-powered learning platform.</strong><br />
+  Upload any study material — get notes, flashcards, quizzes, podcasts, and a tutor.
 </p>
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="#tech-stack">Tech Stack</a> •
-  <a href="#getting-started">Getting Started</a> •
-  <a href="#environment-variables">Environment Variables</a> •
-  <a href="#api-routes">API Routes</a> •
-  <a href="#project-structure">Project Structure</a> •
-  <a href="#credits">Credits</a>
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#api-reference">API</a> •
+  <a href="#configuration">Configuration</a> •
+  <a href="#project-structure">Structure</a>
 </p>
-
----
-
-## Overview
-
-Zenius is an AI-powered learning platform designed to help students learn more effectively across multiple study modalities. It transforms various study materials (PDFs, documents, audio files, YouTube videos, web links) into interactive learning tools including AI-generated notes, flashcards, quizzes, podcasts, and an intelligent chat tutor.
-
-The platform was created by **Semeriya Seid** (also known as Suda) to provide students with a comprehensive, AI-driven study assistant that adapts to different learning styles.
 
 ---
 
 ## Features
 
-### 📄 Document Processing
-- **PDF Upload**: Extract and process content from PDF files
-- **DOCX Support**: Parse Microsoft Word documents
-- **PPTX Support**: Handle PowerPoint presentations
-- **Text Extraction**: Intelligent content extraction with garbage filtering (slide numbers, page numbers, TOC entries)
+### Document Processing
+Upload PDF, DOCX, or PPTX files. Content is extracted with automatic garbage filtering — slide numbers, page numbers, TOC entries, nav text, and filler are stripped before AI processing.
 
-### 🎙️ Audio Processing
-- **Audio Transcription**: Convert audio files to text using Whisper API
-- **YouTube Integration**: Extract transcripts from YouTube videos
-- **Text-to-Speech**: Generate audio from text using:
-  - Piper (local TTS engine with multiple language support)
-  - Azure Speech Services (as fallback)
+### Audio & Video
+- **Transcription** — Upload audio files; transcribed via Whisper (Groq API)
+- **YouTube** — Paste a YouTube link; extracts transcript and metadata
+- **Text-to-Speech** — Converts notes and scripts to natural speech via Piper (local) or Azure Speech Services
 
-### 📝 AI-Generated Content
-- **Smart Notes**: Transform study materials into clear, exam-focused notes
-- **Flashcards**: Auto-generate flashcards for memorization
-- **Quiz Generation**: Create multiple-choice questions for self-testing
-- **Podcast Scripts**: Convert study materials into engaging audio lesson scripts
+### AI Generation
+All generation uses a multi-tier AI fallback: Cerebras → Mistral → xAI → Gemini → HuggingFace. Only providers with configured API keys are called.
 
-### 💬 AI Chat Tutor
-- Interactive chat interface for asking questions about study materials
-- Context-aware responses that prioritize uploaded content
-- Friendly, encouraging personality (like a helpful senior student)
-- Explains complex topics in simple language
+| Feature | What it does |
+|---------|-------------|
+| **Smart Notes** | Raw material → organized, exam-focused study notes |
+| **Flashcards** | Auto-generated Q&A cards for spaced repetition |
+| **Quizzes** | Multiple-choice questions with 4 options, one correct answer |
+| **Podcasts** | Conversational audio scripts from any source |
 
-### 🎨 User Interface
-- Modern, dark-themed UI with clean aesthetics
-- Responsive design for all device sizes
-- Smooth animations and transitions
-- Multiple content tabs (Notes, Chat, Flashcards, Quizzes, Podcast)
+### AI Tutor Chat
+Context-aware Q&A that references your uploaded material. Responds like a helpful senior student — direct answers first, then clarification. Retains conversation history during a session.
+
+### UI
+- Dark-themed, responsive, tab-based navigation
+- 5 tabs: Home, Search, Files, Chat, Library
+- Learning hub with per-note panels: Notes, Flashcards, Quizzes, Podcast
+- LocalStorage persistence for notes and user profile
 
 ---
 
-## Tech Stack
+## Quick Start
 
-### Core Technologies
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| [Next.js](https://nextjs.org/) | 16.1.6 | React framework with App Router |
-| [React](https://react.dev/) | 19.2.4 | UI library |
-| [TypeScript](https://www.typescriptlang.org/) | 5.7.3 | Type safety |
-| [Tailwind CSS](https://tailwindcss.com/) | 4.1.9 | Styling |
-
-### UI Components
-| Library | Version | Purpose |
-|---------|---------|---------|
-| [Radix UI](https://www.radix-ui.com/) | 1.x | Accessible UI primitives |
-| [Lucide React](https://lucide.dev/) | 0.564.0 | Icon library |
-| [Shadcn/ui](https://ui.shadcn.com/) | - | Component collection |
-| [Recharts](https://recharts.org/) | 2.15.0 | Charts (if needed) |
-| [Embla Carousel](https://www.embla-carousel.com/) | 8.6.0 | Carousel component |
-
-### AI & ML
-| Service | Purpose |
-|---------|---------|
-| [Groq](https://groq.com/) | Optional: Whisper transcription (`GROQ_API_KEY` in `/api/transcribe-audio`) |
-| [Gemini](https://gemini.google.com/) | Fallback LLM |
-| [HuggingFace](https://huggingface.co/) | Last fallback + TTS models |
-| [Whisper](https://openai.com/index/whisper/) | Audio transcription |
-| [Piper](https://github.com/rhasspy/piper) | Local TTS engine |
-
-### Data Processing
-| Library | Purpose |
-|---------|---------|
-| [pdfjs-dist](https://mozilla.github.io/pdf.js/) | PDF parsing |
-| [mammoth](https://github.com/mwilliamson/mammoth.js) | DOCX parsing |
-| [pptx-parser](https://www.npmjs.com/package/pptx-parser) | PPTX parsing |
-| [JSZip](https://stuk.github.io/jszip/) | ZIP file handling |
-
-### Other Dependencies
-| Library | Purpose |
-|---------|---------|
-| [Zod](https://zod.dev/) | Schema validation |
-| [React Hook Form](https://react-hook-form.com/) | Form handling |
-| [date-fns](https://date-fns.org/) | Date utilities |
-| [Sonner](https://sonner.emilkowal.ski/) | Toast notifications |
-| [Vaul](https://vaul.emilkowal.ski/) | Drawer component |
-| [Next Themes](https://github.com/pacocoursey/next-themes) | Dark/light mode |
-| [Vercel Analytics](https://vercel.com/analytics) | Analytics |
-
----
-
-## Getting Started
+```bash
+npm install
+cp .env.example .env.local    # add your API keys
+npm run dev                    # → http://localhost:3000
+```
 
 ### Prerequisites
+- Node.js ≥ 18
+- At least one AI provider API key (see [Configuration → AI Providers](#ai-providers))
 
-Before running the project, ensure you have:
+---
 
-1. **Node.js** (v18 or higher)
-2. **pnpm** (recommended) or npm/yarn
-3. **API Keys** (see Environment Variables section)
+## Usage
 
-### Installation
+### Web App
 
-```bash
-# Clone the repository
-cd study-helper-ai
+1. **Open the app** — Navigate to `/app` (or click "Open App" on the landing page)
+2. **Create a note** — Tap the + button → choose **Blank document**, **Upload file**, or **Paste link**
+   - Supported uploads: PDF, DOCX, PPTX, audio files
+   - Links: YouTube videos or web pages (content is extracted via yt-dlp)
+3. **Enter the learning hub** — Tap any note card to open it
+4. **Study** — Use the tabs inside the hub:
+   - **Notes** — View AI-generated notes; re-generate or download
+   - **Flashcards** — Browse auto-generated cards; flip to check answers
+   - **Quizzes** — Take a multiple-choice quiz; see your score
+   - **Podcast** — Read or listen to the generated podcast script
+5. **Chat** — Ask the AI tutor questions. It has full context of your current note
 
-# Install dependencies
-pnpm install
+### Navigation
 
-# Or using npm
-npm install
+| Tab | Description |
+|-----|-------------|
+| **Home** | Recent notes grid, quick-action buttons (Upload, Link, Audio) |
+| **Search** | Full-text search across all notes |
+| **Files** | File browser — tap any file to open in the Universal Doc Viewer |
+| **Chat** | Global AI tutor (no note context — general Q&A) |
+| **Library** | All notes organized by subject/type |
+
+### Key Shortcuts
+- Tap a note to enter its learning hub
+- Swipe or tap tabs to switch between Notes, Flashcards, Quizzes, Podcast
+- Back button returns to the dashboard
+
+---
+
+## API Reference
+
+All API routes accept `POST` requests. Authentication: none (client-side keys are used server-side).
+
+### `/api/chat`
+Interactive AI tutor. Context-aware if `context` is provided.
+
+```json
+// POST /api/chat
+{ "message": "Explain quantum entanglement", "context": "optional note text" }
+→ { "response": "..." }
 ```
 
-### Development
+### `/api/upload`
+Upload a file. Returns a signed URL and metadata.
 
-```bash
-# Start development server
-pnpm dev
-
-# Build for production
-pnpm build
-
-# Start production server
-pnpm start
+```
+// POST /api/upload (multipart/form-data)
+file: <binary>
+→ { "success": true, "file": { "name": "...", "size": 123, "type": "...", "url": "..." } }
 ```
 
-The application will be available at `http://localhost:3000`
+### `/api/generate-notes`
+Transform source content into structured study notes.
 
-### Mobile App (Capacitor)
-
-This project can run as a native mobile shell (Android/iOS) using Capacitor.
-
-```bash
-# 1) Install native platforms once
-npx cap add android
-npx cap add ios
-
-# 2) Point Capacitor to your deployed Next.js URL
-# Linux/macOS:
-export CAP_SERVER_URL="https://your-domain.com"
-
-# 3) Sync web/native config
-npm run mobile:sync
-
-# 4) Open the native project
-npm run mobile:open:android
-npm run mobile:open:ios
+```json
+// POST /api/generate-notes
+{ "content": "...", "title": "optional title" }
+→ { "success": true, "notes": "..." }
 ```
 
-Notes:
-- The app uses Next.js server routes, so mobile should load a hosted URL via `CAP_SERVER_URL`.
-- `GROQ_API_KEY` is only used for `/api/transcribe-audio` (Whisper).
+### `/api/generate-flashcards`
+Generate Q&A flashcards. Optional `count`, `flashcardStyle`.
 
-### Linting
+```json
+// POST /api/generate-flashcards
+{ "content": "...", "title": "...", "count": 10, "flashcardStyle": "detailed" }
+→ { "success": true, "flashcards": [{ "front": "...", "back": "..." }] }
+```
 
-```bash
-# Run ESLint
-pnpm lint
+### `/api/generate-quiz`
+Generate multiple-choice questions (4 options each).
+
+```json
+// POST /api/generate-quiz
+{ "content": "...", "title": "...", "count": 5 }
+→ { "success": true, "questions": [{ "question": "...", "options": [...], "correct": 0 }] }
+```
+
+### `/api/generate-podcast`
+Generate a spoken-word podcast script from source content.
+
+```json
+// POST /api/generate-podcast
+{ "content": "...", "title": "..." }
+→ { "success": true, "script": "..." }
+```
+
+### `/api/transcribe-audio`
+Transcribe an audio file using Groq Whisper.
+
+```
+// POST /api/transcribe-audio (multipart/form-data)
+audio: <binary>
+→ { "success": true, "transcript": "..." }
+```
+
+### `/api/process-link`
+Extract content from a URL (YouTube or web page).
+
+```json
+// POST /api/process-link
+{ "url": "https://youtube.com/watch?v=..." }
+→ { "success": true, "type": "youtube", "content": "...", "title": "..." }
+```
+
+### `/api/text-to-speech`
+Convert text to spoken audio. Requires [Piper TTS](https://github.com/rhasspy/piper) or Azure Speech.
+
+```json
+// POST /api/text-to-speech
+{ "text": "...", "language": "english" }
+→ Audio stream (audio/wav or audio/mpeg)
+```
+
+### `/api/generate-video-notes`
+Extract YouTube transcript and generate notes in one call.
+
+```json
+// POST /api/generate-video-notes
+{ "url": "https://youtube.com/watch?v=..." }
+→ { "success": true, "notes": "..." }
+```
+
+### `/api/web-search`
+Web search (requires configured AI provider).
+
+```json
+// POST /api/web-search
+{ "query": "mitochondria function" }
+→ { "success": true, "results": [...] }
 ```
 
 ---
 
-## Environment Variables
+## Configuration
 
-Create a `.env.local` file in the root directory with the following variables:
+### AI Providers
 
-```env
-# AI API keys (at least one required). Fallback order:
-# Cerebras → Mistral → xAI → Gemini → HuggingFace
+At least one API key is required. Fallback order:
 
-# Cerebras — Llama 3.1 8B/70B (https://cloud.cerebras.ai/)
-# CEREBRAS_API_KEY=
-# CEREBRAS_MODEL=llama3.1-8b            # or llama3.1-70b — see lib/ai-models.ts
-
-# Mistral AI — Mistral 7B, Mixtral (https://console.mistral.ai/)
-# MISTRAL_API_KEY=
-# MISTRAL_MODEL=open-mixtral-8x7b     # or open-mistral-7b, mistral-small-latest
-
-# xAI Grok
-XAI_API_KEY=your_xai_api_key
-# GROK_API_KEY=your_xai_api_key       # Optional alias for XAI key only (not Groq Cloud)
-# XAI_MODEL=grok-4.20-reasoning
-
-GEMINI_API_KEY=your_gemini_api_key
-
-# Optional: Groq Whisper only (audio transcription — not used for chat/notes)
-# GROQ_API_KEY=
-
-HF_API_KEY=your_hf_api_key            # Optional + TTS (alias: HUGGINGFACE_API_KEY)
-
-# Optional: Azure Speech (for TTS fallback)
-AZURE_SPEECH_KEY=your_azure_speech_key
-AZURE_SPEECH_REGION=your_azure_region
+```
+Cerebras → Mistral → xAI → Gemini → HuggingFace
 ```
 
-### Getting API Keys
+| Variable | Provider | Notes |
+|----------|----------|-------|
+| `CEREBRAS_API_KEY` | [Cerebras](https://cloud.cerebras.ai/) | Set `CEREBRAS_MODEL` (see `lib/ai-models.ts`) |
+| `MISTRAL_API_KEY` | [Mistral AI](https://console.mistral.ai/) | Set `MISTRAL_MODEL` |
+| `XAI_API_KEY` | [xAI (Grok)](https://console.x.ai/) | Alias: `GROK_API_KEY` |
+| `GEMINI_API_KEY` | [Google Gemini](https://aistudio.google.com/app/apikey) | |
+| `HF_API_KEY` | [HuggingFace](https://huggingface.co/settings/tokens) | Also used for TTS model access |
+| `GROQ_API_KEY` | [Groq](https://console.groq.com/) | Whisper transcription **only** — not used for chat/generation |
 
-1. **Cerebras**: https://cloud.cerebras.ai/ — set `CEREBRAS_MODEL` to a supported ID (see `lib/ai-models.ts`)
-2. **Mistral**: https://console.mistral.ai/ — `MISTRAL_MODEL` presets in `lib/ai-models.ts`
-3. **xAI (Grok)**: https://console.x.ai/ — `XAI_API_KEY`
-4. **Gemini**: https://aistudio.google.com/app/apikey
-5. **Groq** (optional): https://console.groq.com/ — `GROQ_API_KEY` for **audio transcription** only (`/api/transcribe-audio`)
-6. **HuggingFace** (optional): https://huggingface.co/settings/tokens
-7. **Azure** (optional TTS): https://azure.microsoft.com/services/cognitive-services/speech-services/
+### Piper TTS
 
-Use **`.env.local`** (recommended) or **`.env`** in the project root. Both are loaded by Next.js; keep real keys out of git (`.env` and `.env*.local` are ignored).
+Piper is a local, open-source text-to-speech engine. Configure via env vars:
 
-Model name tables for Cerebras / Mistral live in **`lib/ai-models.ts`** — copy an ID into `CEREBRAS_MODEL` or `MISTRAL_MODEL` as needed.
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PIPER_BIN` | `piper` | Path to Piper binary |
+| `PIPER_MODEL` | — | Path to `.onnx` voice model (e.g. `voices/en_US-lessac-medium.onnx`) |
+| `PIPER_CONFIG` | — | Path to model config `.json` |
+| `AZURE_SPEECH_KEY` | — | Fallback TTS (Azure Speech Services) |
+| `AZURE_SPEECH_REGION` | — | Azure region |
 
----
+Voice models go in `voices/`. The repo includes `en_US-lessac-medium` by default.
 
-## API Routes
+### Limits
 
-The application provides the following API endpoints:
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/chat` | POST | AI chat tutor for Q&A |
-| `/api/upload` | POST | Upload and process files |
-| `/api/generate-notes` | POST | Generate AI notes from content |
-| `/api/generate-flashcards` | POST | Generate flashcards |
-| `/api/generate-quiz` | POST | Generate quiz questions |
-| `/api/generate-podcast` | POST | Generate podcast script |
-| `/api/transcribe-audio` | POST | Transcribe audio files |
-| `/api/process-link` | POST | Process YouTube/web links |
-| `/api/text-to-speech` | POST | Convert text to speech |
-
-### Detailed API Documentation
-
-#### `/api/chat`
-- **Purpose**: Interactive AI tutor for asking questions
-- **Input**: `{ message: string, context?: string }`
-- **Output**: `{ response: string }`
-
-#### `/api/upload`
-- **Purpose**: Upload files for processing
-- **Input**: Form data with `file` field
-- **Output**: `{ success: true, file: { name, size, type, url } }`
-
-#### `/api/generate-notes`
-- **Purpose**: Transform study content into exam-focused notes
-- **Input**: `{ content: string, title?: string }`
-- **Output**: `{ success: true, notes: string }`
-
-#### `/api/generate-flashcards`
-- **Purpose**: Create study flashcards
-- **Input**: `{ content: string, title?: string, count?: number, flashcardStyle?: string }`
-- **Output**: `{ success: true, flashcards: Array<{ front, back }> }`
-
-#### `/api/generate-quiz`
-- **Purpose**: Generate multiple-choice questions
-- **Input**: `{ content: string, title?: string, count?: number }`
-- **Output**: `{ success: true, questions: Array<{ question, options, correct }> }`
-
-#### `/api/generate-podcast`
-- **Purpose**: Create audio lesson scripts
-- **Input**: `{ content: string, title?: string }`
-- **Output**: `{ success: true, script: string }`
-
-#### `/api/transcribe-audio`
-- **Purpose**: Convert audio to text
-- **Input**: Form data with `audio` field
-- **Output**: `{ success: true, transcript: string }`
-
-#### `/api/process-link`
-- **Purpose**: Extract content from URLs (YouTube, web)
-- **Input**: `{ url: string }`
-- **Output**: `{ success: true, type, content, title }`
-
-#### `/api/text-to-speech`
-- **Purpose**: Convert text to audio
-- **Input**: `{ text: string, language?: string }`
-- **Output**: Audio file stream
+| Limit | Value |
+|-------|-------|
+| TTS input | 2,800 characters |
+| Note generation source | 60,000 characters |
+| Podcast source | 40,000 characters |
+| TTS request timeout | 45 seconds |
+| Quiz questions per request | 5 (default) |
 
 ---
 
 ## Project Structure
 
 ```
-study-helper-ai/
-├── app/                          # Next.js App Router
-│   ├── api/                      # API routes
-│   │   ├── chat/                 # AI chat endpoint
-│   │   ├── extract-docx/         # DOCX extraction
-│   │   ├── extract-pdf/          # PDF extraction
-│   │   ├── generate-flashcards/  # Flashcard generation
-│   │   ├── generate-notes/       # Notes generation
-│   │   ├── generate-podcast/     # Podcast script generation
-│   │   ├── generate-quiz/        # Quiz generation
-│   │   ├── process-link/         # Link processing
-│   │   ├── text-to-speech/       # TTS endpoint
-│   │   ├── transcribe-audio/     # Audio transcription
-│   │   └── upload/               # File upload
-│   ├── note/                     # Note detail pages
-│   │   └── [id]/[section]/       # Dynamic note sections
-│   ├── settings/                 # Settings page
-│   ├── globals.css               # Global styles
-│   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Main page
-├── components/                   # React components
-│   ├── ui/                       # Shadcn/ui components
-│   ├── create-dialogs.tsx        # Document creation dialogs
-│   ├── theme-provider.tsx        # Theme provider
-│   └── webinar-illustration.tsx  # Illustration component
-├── hooks/                        # Custom React hooks
-│   ├── use-mobile.ts             # Mobile detection
-│   └── use-toast.ts              # Toast notifications
-├── lib/                          # Utility libraries
-│   ├── ai.ts                     # AI integration (Cerebras, Mistral, xAI, Gemini, HuggingFace)
-│   ├── data-generator.ts         # Content generation utilities
-│   ├── note-context.tsx          # Note state management
-│   ├── utils.ts                  # General utilities
-│   └── m.txt                     # System prompts
-├── piper/                        # Piper TTS engine
-│   ├── piper                     # Main executable
-│   ├── libespeak-ng.so           # eSpeak library
-│   ├── libonnxruntime.so         # ONNX runtime
-│   ├── libpiper_phonemize.so     # Phonemization library
-│   ├── libtashkeel_model.ort     # TTS model
-│   └── espeak-ng-data/           # Language dictionaries
-├── public/                       # Static assets
-├── package.json                  # Dependencies
-├── tailwind.config.ts            # Tailwind configuration
-├── tsconfig.json                 # TypeScript configuration
-├── next.config.mjs               # Next.js configuration
-├── postcss.config.mjs            # PostCSS configuration
-└── README.md                     # This file
+├── app/
+│   ├── api/                     # 11 API routes
+│   │   ├── chat/                # AI tutor chat
+│   │   ├── upload/              # File upload handler
+│   │   ├── generate-notes/      # Note generation
+│   │   ├── generate-flashcards/ # Flashcard generation
+│   │   ├── generate-quiz/       # Quiz generation
+│   │   ├── generate-podcast/    # Podcast script generation
+│   │   ├── generate-video-notes/# YouTube → notes
+│   │   ├── process-link/        # YouTube/web link extraction
+│   │   ├── transcribe-audio/    # Whisper transcription
+│   │   ├── text-to-speech/      # Piper + Azure TTS
+│   │   └── web-search/          # Web search
+│   ├── app/                     # Dashboard (main app shell)
+│   ├── note/[id]/[section]/     # Note detail routes
+│   ├── page.tsx                 # Landing page
+│   └── globals.css              # Tailwind v4 + theme vars
+├── components/
+│   ├── ui/                      # shadcn/ui primitives
+│   ├── panels/                  # Learning hub panels
+│   │   ├── note-panel.tsx       # Note viewer/editor
+│   │   ├── flashcards-panel.tsx # Flashcard browser
+│   │   ├── quizzes-panel.tsx    # Quiz player
+│   │   ├── podcast-panel.tsx    # Podcast reader
+│   │   └── chat-panel.tsx       # Per-note chat
+│   ├── dialogs/                 # Document creation dialogs
+│   ├── zenius-shell.tsx         # Navigation shell (5-tab layout)
+│   └── learning-hub-view.tsx    # Learning hub orchestrator
+├── lib/
+│   ├── ai.ts                    # Multi-provider AI (Cerebras, Mistral, xAI, Gemini, HF)
+│   ├── ai-models.ts             # Model name tables
+│   ├── zenius-prompts.ts        # System prompt builder
+│   ├── note-context.tsx         # Global state + localStorage persistence
+│   ├── data-generator.ts        # AI-calling helpers for flashcards/quizzes
+│   └── utils.ts                 # Shared utilities
+├── voices/                      # Piper TTS voice models (.onnx + .json)
+├── proxy.ts                     # Security headers (CSP, HSTS, XSS, etc.)
+├── capacitor.config.ts          # Capacitor mobile config
+├── scripts/
+│   └── youtube-extractor.py     # yt-dlp wrapper for transcript extraction
+└── package.json
 ```
 
 ---
 
-## Key Features Implementation
+## Development
 
-### AI Integration (`lib/ai.ts`)
-The AI system uses a multi-tier fallback strategy (only providers with API keys are used), for example:
-1. **Cerebras / Mistral / xAI** (when configured)
-2. **Gemini**: Google's AI
-3. **Last resort**: HuggingFace models
+### Commands
 
-All AI calls include:
-- Source fidelity checks (only use provided content)
-- Garbage filtering (slide numbers, TOC, etc.)
-- Quality over quantity principles
-- Plain text output (no markdown unless requested)
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server (Turbopack) |
+| `npm run build` | Production build |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |
 
-### Note Management (`lib/note-context.tsx`)
-- React Context for global state
-- Supports multiple note types: document, PDF, audio, link
-- Stores metadata: file size, duration, word count, etc.
-- Tab-based navigation: Notes, Chat, Flashcards, Quizzes, Podcast
+### Environment
 
-### File Processing
-- **PDF**: Uses pdfjs-dist for parsing
-- **DOCX**: Uses mammoth for text extraction
-- **PPTX**: Uses pptx-parser for slide content
-- **Audio**: Converts to base64 for storage/transcription
+Copy `.env.example` to `.env.local` (or `.env`). Both are gitignored.
 
-### Text-to-Speech (`app/api/text-to-speech/route.ts`)
-- **Primary**: Piper (local, open-source TTS)
-  - Multiple language support
-  - Fast response times
-  - No API costs
-- **Fallback**: Azure Speech Services
-  - Neural voices
-  - High quality output
+```bash
+# Minimal setup — one AI provider is enough
+GEMINI_API_KEY=your_key_here
+```
+
+### Mobile Build (Capacitor)
+
+```bash
+npx cap add android          # one-time setup
+export CAP_SERVER_URL="https://your-deployed-url.com"
+npm run mobile:sync
+npm run mobile:open:android
+```
+
+The app uses Next.js server routes, so the mobile shell must load a hosted instance.
 
 ---
 
-## Design System
+## Architecture Notes
 
-### Colors
-The application uses a dark theme with the following color palette:
-- Background: Dark slate (#06080d)
-- Primary: Custom accent colors
-- Text: Light gray/slate
-- Borders: Subtle white/10
-
-### Typography
-- **Font**: Geist (Sans) and Geist Mono
-- **Headings**: Bold, clear hierarchy
-- **Body**: Readable, comfortable line height
-
-### Components
-All UI components are built using Radix UI primitives with custom styling via Tailwind CSS. The component library includes:
-- Buttons, Inputs, Textareas
-- Dialogs, Drawers, Sheets
-- Dropdown Menus, Select
-- Tabs, Accordions
-- Toast notifications
-- And many more...
-
----
-
-## Development Notes
-
-### TypeScript Configuration
-- Strict mode enabled
-- ES6 target
-- DOM and ESNext libraries
-- Bundle module resolution
-
-### Next.js Configuration
-- TypeScript ignore build errors enabled (for faster development)
-- Image optimization disabled (using external images)
-- App Router enabled
-
-### Tailwind Configuration
-- CSS variables for theming
-- Dark mode via class
-- Custom color extensions
-- PostCSS for processing
-
----
-
-## Performance Considerations
-
-1. **File Size Limits**: TTS input limited to 2800 characters
-2. **Source Truncation**: Notes limited to 60,000 characters
-3. **Podcast Source**: Limited to 40,000 characters
-4. **Timeout Handling**: 45-second timeout for TTS requests
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-1. **API Key Errors**: Ensure all required environment variables are set
-2. **File Upload Fails**: Check file size limits and supported formats
-3. **TTS Not Working**: Verify Piper binaries are executable
-4. **YouTube Transcript Fails**: Some videos don't have available transcripts
-
-### Getting Help
-
-If you encounter issues:
-1. Check the console logs for error messages
-2. Verify your API keys are correct and have sufficient quota
-3. Ensure the required services are accessible in your region
+- **AI fallback chain**: Each provider is tried in order; if it fails or returns empty, the next is attempted. Only providers with configured API keys are included.
+- **Runtime**: Three API routes (`text-to-speech`, `process-link`, `generate-video-notes`) use `runtime = 'nodejs'` (child_process, fs). All others use the default Edge runtime.
+- **State**: Notes and user profile persist in `localStorage` under `zenius_notes` and `zenius_profile` keys. No backend database.
+- **Offline fallback**: If all AI providers fail, `data-generator.ts` produces minimal flashcards/quizzes from the source text directly.
 
 ---
 
 ## Credits
 
-### Creator
-**Semeriya Seid** (also known as Suda)
-- Created Zenius to help students learn more effectively
-- Developed the AI integration system
-- Built the complete platform
-
-### Open Source Libraries
-This project uses many open source libraries. See `package.json` for the complete list.
-
-### AI Models
-- Groq (optional Whisper transcription via `GROQ_API_KEY`)
-- Google Gemini (LLM)
-- Meta Llama / Facebook models (HuggingFace)
-- OpenAI Whisper (transcription)
-- Piper TTS (local speech synthesis)
-
----
-
-## License
-
-This project is for educational and personal use. All AI services require their respective terms of service.
-
----
-
-## Future Enhancements
-
-Potential features to add:
-- [ ] User authentication
-- [ ] Cloud storage for notes
-- [ ] Collaborative study features
-- [ ] More language support
-- [ ] Mobile app
-- [ ] Browser extension
+Built by **Semeriya Seid** (Suda). Licensed for educational and personal use. See `package.json` for the full dependency list.
 
 ---
 
 <p align="center">
-  <strong>Built with ❤️ by Semeriya Seid (Suda)</strong>
-</p>
-
-<p align="center">
-  <em>Zenius - Your intelligent AI tutor for smarter learning</em>
+  <em>Zenius — Your intelligent AI tutor for smarter learning</em>
 </p>

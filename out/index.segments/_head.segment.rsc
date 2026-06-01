@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[30085,["/_next/static/chunks/0xc-fw-310nrp.js","/_next/static/chunks/017b4xej_2j5_.js","/_next/static/chunks/11dse3xgy11q..js"],"ViewportBoundary"]
-3:I[30085,["/_next/static/chunks/0xc-fw-310nrp.js","/_next/static/chunks/017b4xej_2j5_.js","/_next/static/chunks/11dse3xgy11q..js"],"MetadataBoundary"]
-4:"$Sreact.suspense"
-5:I[87765,["/_next/static/chunks/0xc-fw-310nrp.js","/_next/static/chunks/017b4xej_2j5_.js","/_next/static/chunks/11dse3xgy11q..js"],"IconMark"]
-0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Zenius"}],["$","meta","1",{"name":"description","content":"AI-powered learning — notes, flashcards, quizzes, and more"}],["$","link","2",{"rel":"icon","href":"/logo.svg","type":"image/svg+xml"}],["$","$L5","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"m6WUgxjZVo6YHkWUR47Cd"}
